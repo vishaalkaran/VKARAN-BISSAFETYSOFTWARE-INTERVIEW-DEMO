@@ -7,12 +7,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./backend:/var/www/html
+      - prod-js:/var/www/html/laravel/public/js
     ports:
       - "8000:80"
     environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
-      - APP_KEY=
       - DB_HOST=database
       - DB_PORT=3306
       - DB_DATABASE=laravel
@@ -27,8 +25,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
+      - prod-js:/app/react-app/send-to-laravel
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
 
   database:
     image: mysql:5.7
@@ -41,7 +42,19 @@ services:
       MYSQL_USER: laravel
       MYSQL_PASSWORD: laravelpassword
     volumes:
-      - db_data:/var/lib/mysql
+      - ./mysql_container:/var/lib/mysql
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: database # Use the service name of the MySQL container
+      MYSQL_ROOT_PASSWORD: rootpassword
+    depends_on:
+      - database
+    ports:
+      - 8443:80
+
 
 volumes:
-  db_data:
+  prod-js:
