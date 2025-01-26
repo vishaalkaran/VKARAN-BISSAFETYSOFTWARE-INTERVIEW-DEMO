@@ -2,7 +2,7 @@
 FROM node:18
 
 # Set working directory inside the container
-WORKDIR /app/react-app
+WORKDIR /app/frontend/react-app
 
 # Copy package.json and package-lock.json for dependency installation
 COPY react-app/package*.json ./

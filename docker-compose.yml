@@ -6,8 +6,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./backend:/var/www/html
-      - prod-js:/var/www/html/laravel/public/js
+      - ./:/var/www/html
     ports:
       - "8000:80"
     environment:
@@ -24,8 +23,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - ./frontend:/app
-      - prod-js:/app/react-app/send-to-laravel
+      - ./:/app
     ports:
       - "3000:3000"
     depends_on:
@@ -54,7 +52,3 @@ services:
       - database
     ports:
       - 8443:80
-
-
-volumes:
-  prod-js:

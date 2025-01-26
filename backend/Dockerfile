@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd pdo pdo_mysql
 
 # Set working directory for the app
-WORKDIR /var/www/html
+WORKDIR /var/www/html/backend
 
 # Copy the Nginx configuration file (default.conf)
 COPY ./default.conf /etc/nginx/sites-available/default
@@ -24,16 +24,16 @@ EXPOSE 80
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy existing Laravel project files
-COPY . /var/www/html
+COPY . /var/www/html/backend
 
 # Set appropriate permissions on Laravel directories
-RUN chown -R www-data:www-data /var/www/html/laravel && \
-    chmod -R 775 /var/www/html/laravel && \
-    chmod -R 775 /var/www/html/laravel/storage && \
-    chmod -R 775 /var/www/html/laravel/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/backend/laravel && \
+    chmod -R 775 /var/www/html/backend/laravel && \
+    chmod -R 775 /var/www/html/backend/laravel/storage && \
+    chmod -R 775 /var/www/html/backend/laravel/bootstrap/cache
 
 # Install Composer dependencies (if there is a composer.json already)
-RUN cd /var/www/html/laravel && composer install
+RUN cd /var/www/html/backend/laravel && composer install
 
 # Start PHP-FPM and Nginx
 CMD service nginx start && php-fpm

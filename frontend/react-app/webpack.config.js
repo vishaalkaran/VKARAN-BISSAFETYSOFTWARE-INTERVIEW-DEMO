@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.js', // Your main entry point
     output: {
         // path: path.resolve(__dirname, 'public'), // Output directory
-        path: path.resolve(__dirname, 'send-to-laravel'), // Output directory
+        path: path.resolve(__dirname, '../..//backend/laravel/public/js'), // Output directory
         filename: 'main.js', // Output file name
         publicPath: '/', // Ensure assets are served from the root
     },
